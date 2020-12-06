@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mrduoduo2.dao.Entity">
+    <select id="selectBus" resultType="com.github.mrduoduo2.models.Bus">
+        select armrest,monitor from bus;
+    </select>
+
+    <select id="countVehicle" resultType="int">
+        select count(0) from vehicle;
+    </select>
+
+    <select id="countBus" resultType="int">
+        select count(0) from vehicle where type=2;
+    </select>
+
+    <select id="countBus2" resultType="int">
+        select count(0) from bus;
+    </select>
+
+
+    <select id="findByPlate" resultMap="vehicleResult">
+        select * from vehicle as v
+        join attr as a on a.attr_id = v.attr_id
+        where a.color = "Red";
+    </select>
+
+    <resultMap id="vehicleResult" type="com.github.mrduoduo2.models.Vehicle">
+        <id property="vehicle_id" column="vehicle_id"/>
+        <result property="type_id" column="type_id"/>
+        <result property="sub_id" column="sub_id"/>
+        <result property="attr_id" column="attr_id"/>
+        <association property="attr" javaType="com.github.mrduoduo2.models.Attr">
+            <id property="attr_id" column="attr_id"/>
+            <result property="attr_id" column="attr_id"/>
+            <result property="door" column="door"/>
+            <result property="windows" column="windows"/>
+            <result property="lights" column="lights"/>
+            <result property="wheel" column="wheel"/>
+            <result property="dyn_sys" column="dyn_sys"/>
+            <result property="exh_sys" column="exh_sys"/>
+            <result property="clutch" column="clutch"/>
+            <result property="color" column="color"/>
+            <result property="fuel" column="fuel"/>
+            <result property="plate" column="plate"/>
+            <result property="member" column="member"/>
+        </association>
+    </resultMap>
+
+
+
+
+    <insert id="addBus">
+        insert into bus (armrest,toll,monitor,line,floor,car) values(#{armrest},#{toll},#{monitor},#{line},#{floor},#{car});
+    </insert>
+    <insert id="addSuv">
+        insert into suv (car,cha_height,tyre,direction_sys,damper) values(#{car},#{cha_height},#{tyre},#{direction_sys},#{damper});
+    </insert>
+    <insert id="addAttr">
+        insert into attr (door,windows,lights,wheel,dyn_sys,exh_sys,clutch,color,fuel,plate,member) values(#{door},#{windows},#{lights},#{wheel},#{dyn_sys},#{exh_sys},#{clutch},#{color},#{fuel},#{plate},#{member});
+    </insert>
+    <insert id="addVehicle">
+        insert into vehicle (type_id,sub_id,attr_id) values (#{type_id},#{sub_id},#{attr_id});
+    </insert>
+</mapper>
