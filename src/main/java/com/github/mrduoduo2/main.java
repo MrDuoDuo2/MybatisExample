@@ -3,6 +3,7 @@ package com.github.mrduoduo2;
 import com.github.mrduoduo2.dao.Entity;
 import com.github.mrduoduo2.models.Bus;
 import com.github.mrduoduo2.models.Vehicle;
+import com.github.mrduoduo2.models.Vehicleview;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,19 +35,15 @@ public class main {
             }
         }
 
+
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         try (SqlSession session = sqlSessionFactory.openSession()) {
             Entity entity = session.getMapper(Entity.class);
-            Vehicle vehicle =entity.findByPlate();
-
-            int vehicleID = vehicle.getVehicle_id();
-            int TypeID = vehicle.getType_id();
-
-            System.out.println(vehicleID);
-            System.out.println(TypeID);
-
-
-
+            Vehicleview vehicleview = entity.selectView();
+            Vehicle vehicle = entity.findByColor("Red");
+//            System.out.println(vehicleview.toString());
+            System.out.println(vehicle.toString());
+            session.commit();
         }
 
     }

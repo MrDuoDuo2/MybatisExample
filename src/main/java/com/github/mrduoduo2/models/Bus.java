@@ -9,6 +9,19 @@ public class Bus {
     private int floor;
     private int car;
 
+    public Bus() {
+    }
+
+    public Bus(int sub_id, int armrest, String toll, int monitor, String line, int floor, int car) {
+        this.sub_id = sub_id;
+        this.armrest = armrest;
+        this.toll = toll;
+        this.monitor = monitor;
+        this.line = line;
+        this.floor = floor;
+        this.car = car;
+    }
+
     public int getSub_id() {
         return sub_id;
     }
@@ -63,5 +76,18 @@ public class Bus {
 
     public void setCar(int car) {
         this.car = car;
+    }
+
+    @Override
+    public String toString() {
+        return "Bus{" +
+                "sub_id=" + sub_id +
+                ", armrest=" + armrest +
+                ", toll='" + toll + '\'' +
+                ", monitor=" + monitor +
+                ", line='" + line + '\'' +
+                ", floor=" + floor +
+                ", car=" + car +
+                '}';
     }
 }

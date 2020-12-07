@@ -1,20 +1,30 @@
 package com.github.mrduoduo2.dao;
 
-import com.github.mrduoduo2.models.Bus;
-import com.github.mrduoduo2.models.Vehicle;
+import com.github.mrduoduo2.models.*;
 
 import java.util.List;
 
 public interface Entity {
-    int countVehicle();
+    //select
     Bus selectBus(int id);
+    int countVehicle();
+    int countBus();
+    int countBus2();
+    Vehicle findByColor(String color);
+    Vehicle findBus();
+    Vehicleview selectView();
+
+    //insert
+    void insertSuv(Suv suv);
+    void insertBus(Bus bus);
+    void insertAttr(Attr attr);
+    void insertVehicle(Vehicle vehicle);
+
+    //update
+    void updateBus();
 
 
-    void addSuv(int car,String cha_height,String tyre,String direction_sys,String damper);
-    void addBus(int armrest,String toll,int monitor,String line,int floor,int car);
-    void addAttr(int door,int windows,int lights,int wheel,String dyn_sys,String exh_sys,String clutch,String color,String fuel,String plate,int member);
-    void addVehicle(int type_id,int sub_id,int attr_id);
-    Vehicle findByPlate();
-
+    //delete
+    void deleteBus(int sub_id);
 
 }

@@ -15,6 +15,25 @@ public class Attr {
     private int member;
     private int speed;
 
+    public Attr() {
+    }
+
+    public Attr(Long attr_id, int door, int windows, int lights, int wheel, String dyn_sys, String exh_sys, String clutch, String color, String fuel, String plate, int member, int speed) {
+        this.attr_id = attr_id;
+        this.door = door;
+        this.windows = windows;
+        this.lights = lights;
+        this.wheel = wheel;
+        this.dyn_sys = dyn_sys;
+        this.exh_sys = exh_sys;
+        this.clutch = clutch;
+        this.color = color;
+        this.fuel = fuel;
+        this.plate = plate;
+        this.member = member;
+        this.speed = speed;
+    }
+
     public Long getAttr_id() {
         return attr_id;
     }
@@ -117,5 +136,24 @@ public class Attr {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    @Override
+    public String toString() {
+        return "Attr{" +
+                "attr_id=" + attr_id +
+                ", door=" + door +
+                ", windows=" + windows +
+                ", lights=" + lights +
+                ", wheel=" + wheel +
+                ", dyn_sys='" + dyn_sys + '\'' +
+                ", exh_sys='" + exh_sys + '\'' +
+                ", clutch='" + clutch + '\'' +
+                ", color='" + color + '\'' +
+                ", fuel='" + fuel + '\'' +
+                ", plate='" + plate + '\'' +
+                ", member=" + member +
+                ", speed=" + speed +
+                '}';
     }
 }

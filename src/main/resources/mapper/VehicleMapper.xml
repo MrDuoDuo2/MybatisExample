@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.mrduoduo2.dao.Entity">
+    <!--    select    -->
     <select id="selectBus" resultType="com.github.mrduoduo2.models.Bus">
         select armrest,monitor from bus;
     </select>
@@ -20,11 +21,30 @@
     </select>
 
 
-    <select id="findByPlate" resultMap="vehicleResult">
+    <select id="selectView" resultType="com.github.mrduoduo2.models.Vehicleview">
+        select * from vehicleview;
+    </select>
+
+    <select id="findByColor" resultMap="vehicleResult">
         select * from vehicle as v
         join attr as a on a.attr_id = v.attr_id
-        where a.color = "Red";
+        where a.color = #{color}
     </select>
+
+    <select id="findBus" resultMap="busResult">
+        select v.vehicle_id,
+        (select type_name from vehicle where type_id=2) as 类型,a.door
+        from vehicle as v,attr as a
+        where a.attr_id = v.attr_id;
+    </select>
+
+    <resultMap id="busResult" type="com.github.mrduoduo2.models.Vehicle">
+        <id property="vehicle_id" column="vehicle_id"/>
+        <result property="type_name" column="类型"/>
+        <association property="attr" javaType="com.github.mrduoduo2.models.Attr">
+            <result property="door" column="door"/>
+        </association>
+    </resultMap>
 
     <resultMap id="vehicleResult" type="com.github.mrduoduo2.models.Vehicle">
         <id property="vehicle_id" column="vehicle_id"/>
@@ -47,4 +67,31 @@
             <result property="member" column="member"/>
         </association>
     </resultMap>
+
+    <!--    insert    -->
+    <insert id="insertBus">
+        insert into bus (armrest,toll,monitor,line,floor,car) values(#{armrest},#{toll},#{monitor},#{line},#{floor},#{car});
+    </insert>
+    <insert id="insertSuv">
+        insert into suv (car,cha_height,tyre,direction_sys,damper) values(#{car},#{cha_height},#{tyre},#{direction_sys},#{damper});
+    </insert>
+    <insert id="insertAttr">
+        insert into attr (door,windows,lights,wheel,dyn_sys,exh_sys,clutch,color,fuel,plate,member) values(#{door},#{windows},#{lights},#{wheel},#{dyn_sys},#{exh_sys},#{clutch},#{color},#{fuel},#{plate},#{member});
+    </insert>
+    <insert id="insertVehicle">
+        insert into vehicle(type_id,sub_id,attr_id) values(#{type_id},#{sub_id},#{attr_id});
+    </insert>
+
+    <!--    update    -->
+    <update id="updateBus">
+        update bus as b,attr as a,vehicle as v
+        set
+        b.monitor = 4 ,b.line = "727",a.speed = 110
+        where b.sub_id = v.sub_id and v.attr_id = a.attr_id and  b.sub_id = 1;
+    </update>
+
+    <!--    delete    -->
+    <delete id="deleteBus">
+        delete from bus where sub_id = #{sub_id};
+    </delete>
 </mapper>

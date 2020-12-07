@@ -7,6 +7,16 @@ public class Vehicle {
     private int attr_id;
     Attr attr;
 
+    public Vehicle() {
+    }
+
+    public Vehicle(int vehicle_id, int type_id, int sub_id, int attr_id) {
+        this.vehicle_id = vehicle_id;
+        this.type_id = type_id;
+        this.sub_id = sub_id;
+        this.attr_id = attr_id;
+    }
+
     public int getVehicle_id() {
         return vehicle_id;
     }
@@ -45,5 +55,16 @@ public class Vehicle {
 
     public void setAttr(Attr attr) {
         this.attr = attr;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vehicle_id=" + vehicle_id +
+                ", type_id=" + type_id +
+                ", sub_id=" + sub_id +
+                ", attr_id=" + attr_id +
+                ", attr=" + attr +
+                '}';
     }
 }

@@ -8,6 +8,18 @@ public class Suv {
      private String direction_sys;
      private String damper;
 
+    public Suv() {
+    }
+
+    public Suv(int sub_id, int car, String cha_height, String tyre, String direction_sys, String damper) {
+        this.sub_id = sub_id;
+        this.car = car;
+        this.cha_height = cha_height;
+        this.tyre = tyre;
+        this.direction_sys = direction_sys;
+        this.damper = damper;
+    }
+
     public int getSub_id() {
         return sub_id;
     }
@@ -54,5 +66,17 @@ public class Suv {
 
     public void setDamper(String damper) {
         this.damper = damper;
+    }
+
+    @Override
+    public String toString() {
+        return "Suv{" +
+                "sub_id=" + sub_id +
+                ", car=" + car +
+                ", cha_height='" + cha_height + '\'' +
+                ", tyre='" + tyre + '\'' +
+                ", direction_sys='" + direction_sys + '\'' +
+                ", damper='" + damper + '\'' +
+                '}';
     }
 }
