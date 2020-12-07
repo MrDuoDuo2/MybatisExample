@@ -33,9 +33,19 @@
 
     <select id="findBus" resultMap="busResult">
         select v.vehicle_id,
-        (select type_name from vehicle where type_id=2) as 类型,a.door
+        v.type_name as 类型,a.door
         from vehicle as v,attr as a
-        where a.attr_id = v.attr_id;
+        where a.attr_id = v.attr_id and v.type_name = (select type_name from vehicle where type_id=2) ;
+    </select>
+
+    <select id="selectVehicleIn" resultType="com.github.mrduoduo2.models.Vehicle">
+        SELECT *
+        FROM vehicle
+        WHERE vehicle_id in
+        <foreach item="item" index="testindex" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <resultMap id="busResult" type="com.github.mrduoduo2.models.Vehicle">

@@ -3,6 +3,7 @@ package com.github.mrduoduo2.dao;
 import com.github.mrduoduo2.models.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Entity {
     //select
@@ -13,6 +14,7 @@ public interface Entity {
     Vehicle findByColor(String color);
     Vehicle findBus();
     Vehicleview selectView();
+    Vehicle selectVehicleIn(List<Vehicle> item);
 
     //insert
     void insertSuv(Suv suv);

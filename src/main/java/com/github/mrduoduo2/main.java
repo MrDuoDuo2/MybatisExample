@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class main {
 
@@ -41,8 +42,11 @@ public class main {
             Entity entity = session.getMapper(Entity.class);
             Vehicleview vehicleview = entity.selectView();
             Vehicle vehicle = entity.findByColor("Red");
+
+            List<Vehicle> vehicleList = null;
+            Vehicle vehicle1 = entity.selectVehicleIn(vehicleList);
 //            System.out.println(vehicleview.toString());
-            System.out.println(vehicle.toString());
+            System.out.println(vehicle1.toString());
             session.commit();
         }
 
