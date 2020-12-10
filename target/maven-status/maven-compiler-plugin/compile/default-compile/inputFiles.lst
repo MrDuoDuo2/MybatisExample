@@ -1,6 +1,9 @@
-/home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/dao/BusMapper.java
+/home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/TimeServerHandler.java
 /home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/models/Suv.java
 /home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/models/Bus.java
+/home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/models/Vehicleview.java
+/home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/dao/Entity.java
+/home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/MinaTimeServer.java
 /home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/main.java
 /home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/models/Vehicle.java
 /home/zyx/workspace/Vehicle/src/main/java/com/github/mrduoduo2/models/Attr.java
