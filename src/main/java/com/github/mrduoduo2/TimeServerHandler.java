@@ -1,8 +1,5 @@
 package com.github.mrduoduo2;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -10,15 +7,19 @@ import org.apache.mina.core.session.IoSession;
 import java.util.Date;
 
 public class TimeServerHandler extends IoHandlerAdapter {
+    public static final HappyLog HAPPY_LOG = new HappyLog(TimeServerHandler.class);
+
     @Override
-    public void exceptionCaught(IoSession session, Throwable cause ) throws Exception
-    {
+    public void exceptionCaught(IoSession session, Throwable cause ) {
         cause.printStackTrace();
     }
 
     @Override
     public void messageReceived( IoSession session, Object message ) throws Exception
     {
+        HAPPY_LOG.enterFunc("messageReceived");
+
+        System.out.println("messageReceived");
         MysqlController mysqlController = new MysqlController();
         mysqlController.init();
 
@@ -28,34 +29,52 @@ public class TimeServerHandler extends IoHandlerAdapter {
             return;
         }
 
-        String result = str.trim();
-        JsonObject jsonObject = new JsonParser().parse(result).getAsJsonObject();
+        SqlJson sqlJson = JsonUtils.fromJson(str, SqlJson.class);
 
-        System.out.println(result);
-        JsonElement METHOD = jsonObject.get("METHOD");
-        JsonElement FIELD = jsonObject.get("FIELD");
-        JsonElement TABLE = jsonObject.get("TABLE");
-        JsonElement WHERE = jsonObject.get("WHERE");
-
-        String string = mysqlController.sql(METHOD,FIELD,TABLE,WHERE);
+        String json = null;
+        assert sqlJson != null;
+        if (sqlJson.METHOD.equals("SELECT")){
+            json = mysqlController.findByColor("Red");
+        }
+        if(sqlJson.METHOD.equals("INSERT") && sqlJson.TABLE.equals("BUS")){
+            mysqlController.insertBus();
+        }
+        if(sqlJson.METHOD.equals("INSERT") && sqlJson.TABLE.equals("ATTR")){
+            mysqlController.insertAttr();
+        }
+        if(sqlJson.METHOD.equals("INSERT") && sqlJson.TABLE.equals("VEHICLE")){
+            mysqlController.insertVehicle();
+        }
+        if(sqlJson.METHOD.equals("INSERT") && sqlJson.TABLE.equals("SUV")){
+            mysqlController.insertSuv();
+        }
+        if (sqlJson.METHOD.equals("UPDATE")){
+            mysqlController.update();
+        }
+        if (sqlJson.METHOD.equals("DELETE")){
+            mysqlController.delete();
+        }
 
         Date date = new Date();
-        String json = mysqlController.findByColor("Red");
         System.out.println(json);
         session.write(json);
 
         System.out.println(date.toString());
         System.out.println("Message written...");
+
+        HAPPY_LOG.exitFunc("messageReceived");
     }
 
     @Override
-    public void sessionIdle( IoSession session, IdleStatus status ) throws Exception
-    {
+    public void sessionIdle( IoSession session, IdleStatus status ) {
+        HAPPY_LOG.enterFunc("sessionIdle");
         System.out.println( "IDLE " + session.getIdleCount( status ));
+        HAPPY_LOG.exitFunc("sessionIdle");
     }
 
-    @Override
-    public void sessionOpened(IoSession session) throws Exception {
-
+    public static class SqlJson{
+        private String METHOD;
+        private String TABLE;
     }
 }
+

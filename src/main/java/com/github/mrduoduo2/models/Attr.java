@@ -1,7 +1,7 @@
 package com.github.mrduoduo2.models;
 
 public class Attr {
-    private Long attr_id;
+    private int attr_id;
     private int door;
     private int windows;
     private int lights;
@@ -18,7 +18,7 @@ public class Attr {
     public Attr() {
     }
 
-    public Attr(Long attr_id, int door, int windows, int lights, int wheel, String dyn_sys, String exh_sys, String clutch, String color, String fuel, String plate, int member, int speed) {
+    public Attr(int attr_id, int door, int windows, int lights, int wheel, String dyn_sys, String exh_sys, String clutch, String color, String fuel, String plate, int member, int speed) {
         this.attr_id = attr_id;
         this.door = door;
         this.windows = windows;
@@ -34,11 +34,11 @@ public class Attr {
         this.speed = speed;
     }
 
-    public Long getAttr_id() {
+    public int getAttr_id() {
         return attr_id;
     }
 
-    public void setAttr_id(Long attr_id) {
+    public void setAttr_id(int attr_id) {
         this.attr_id = attr_id;
     }
 
