@@ -20,7 +20,8 @@ public class MinaTimeServer {
         DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
 
         chain.addLast( "logger", new LoggingFilter() );
-        chain.addLast( "codec", new ProtocolCodecFilter( new TextLineCodecFactory(StandardCharsets.UTF_8)));
+//        chain.addLast( "codec", new ProtocolCodecFilter( new TextLineCodecFactory(StandardCharsets.UTF_8)));
+        chain.addLast("codec",new ProtocolCodecFilter(new DecoderFactory()));
 
         acceptor.setHandler(  new TimeServerHandler() );
         acceptor.getSessionConfig().setReuseAddress(true);

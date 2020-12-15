@@ -5,7 +5,6 @@ import com.github.mrduoduo2.models.Attr;
 import com.github.mrduoduo2.models.Bus;
 import com.github.mrduoduo2.models.Suv;
 import com.github.mrduoduo2.models.Vehicle;
-import com.google.gson.JsonElement;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -37,7 +36,7 @@ public class MysqlController {
     }
 
 
-    public void insertBus(){
+    public String insertBus(){
         Bus bus =new Bus();
         bus.setLine("788");
         bus.setFloor(2);
@@ -46,18 +45,20 @@ public class MysqlController {
         bus.setSub_id(3);
 
         entity.insertBus(bus);
+        return "OK";
     }
 
-    public void insertSuv(){
+    public String insertSuv(){
         Suv suv = new Suv();
         suv.setCar(2);
         suv.setSub_id(3);
         suv.setCha_height("");
 
         entity.insertSuv(suv);
+        return "OK";
     }
 
-    public void insertAttr(){
+    public String insertAttr(){
         Attr attr = new Attr();
         attr.setAttr_id(2);
         attr.setColor("Blue");
@@ -66,22 +67,27 @@ public class MysqlController {
         attr.setWindows(20);
 
         entity.insertAttr(attr);
+
+        return "OK";
     }
 
-    public void insertVehicle(){
+    public String insertVehicle(){
         Vehicle vehicle = new Vehicle();
         vehicle.setType_id(1);
         vehicle.setAttr_id(2);
         vehicle.setSub_id(3);
 
         entity.insertVehicle(vehicle);
+        return "OK";
     }
 
-    public void delete(){
+    public String delete(){
         entity.deleteBus(2);
+        return "OK";
     }
 
-    public void update(){
+    public String update(){
         entity.updateBus();
+        return "OK";
     }
 }
