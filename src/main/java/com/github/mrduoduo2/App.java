@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        Integer PORT = 9000;
+        Integer PORT = 9001;
         MinaTimeServer minaTimeServer = new MinaTimeServer();
         minaTimeServer.Bind(PORT);
     }

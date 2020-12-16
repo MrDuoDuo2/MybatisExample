@@ -1,15 +1,10 @@
 package com.github.mrduoduo2;
 
-import org.apache.mina.core.buffer.IoBuffer;
+import com.github.mrduoduo2.models.SqlJson;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 public class TimeServerHandler extends IoHandlerAdapter {
@@ -25,47 +20,55 @@ public class TimeServerHandler extends IoHandlerAdapter {
         MysqlController mysqlController = new MysqlController();
         mysqlController.init();
 
-        String str = new String((byte[]) message, StandardCharsets.UTF_8);
-        if (str.trim().equalsIgnoreCase("quit")) {
-            sessionClosed(session);
-            return;
+        SqlJson json = (SqlJson) message;
+
+        SqlJson result = new SqlJson();
+        result.setCODE(0);
+        try {
+            if (json.getMETHOD().equals("INSERT")) {
+                switch (json.getTABLE()) {
+                    case "BUS":
+                        result.setMESSAGE(mysqlController.insertBus());
+                        break;
+                    case "SUV":
+                        result.setMESSAGE(mysqlController.insertSuv());
+                        break;
+                    case "ATTR":
+                        result.setMESSAGE(mysqlController.insertAttr());
+                        break;
+                    case "VEHICLE":
+                        result.setMESSAGE(mysqlController.insertVehicle());
+                        break;
+                    case "":
+                        result.setMESSAGE("表名为空");
+                        break;
+                }
+            }
+            if (json.getMETHOD().equals("SELECT")) {
+                result.setDATA(mysqlController.findByColor("Red"));
+            }
+            if (json.getMETHOD().equals("DELETE")) {
+                result.setMESSAGE(mysqlController.delete());
+            }
+
+            if (json.getMETHOD().equals("UPDATE")) {
+                try {
+                    result.setMESSAGE(mysqlController.update());
+                } catch (Exception e) {
+                    result.setMESSAGE("更新错误");
+                }
+            }
+
+            if (json.getMETHOD().equals("")) {
+                result.setMESSAGE("方法名为空");
+            }
+        }catch (Exception e){
+            result.setMESSAGE("JSON不正确");
         }
 
-//        System.out.println(str);
-
-        SqlJson json = JsonUtils.fromJson(str, SqlJson.class);
-
-        String mess = null;
-        if (json.METHOD.equals("INSERT")) {
-            if (json.TABLE.equals("BUS")) {
-                mess = mysqlController.insertBus();
-            }
-            if (json.TABLE.equals("SUV")) {
-                mess = mysqlController.insertSuv();
-            }
-            if (json.TABLE.equals("ATTR")) {
-                mess = mysqlController.insertAttr();
-            }
-            if (json.TABLE.equals("VEHICLE")) {
-                mess = mysqlController.insertVehicle();
-            }
-        }
-        if (json.METHOD.equals("SELECT")) {
-            mess = mysqlController.findByColor("Red");
-        }
-        if (json.METHOD.equals("DELETE")) {
-            mess = mysqlController.delete();
-        }
-
-        if (json.METHOD.equals("UPDATE")) {
-            mess = mysqlController.update();
-        }
 
         Date date = new Date();
-
-//        System.out.println(mess);
-        session.write(mess + "\n");
-//        System.out.println(date.toString());
+        session.write( result);
         System.out.println("Message written...");
     }
 
@@ -78,11 +81,6 @@ public class TimeServerHandler extends IoHandlerAdapter {
 
     @Override
     public void sessionClosed(IoSession session) throws Exception {
-    }
-
-    public static class SqlJson {
-        private String METHOD;
-        private String TABLE;
     }
 }
 

@@ -45,6 +45,7 @@ public class MysqlController {
         bus.setSub_id(3);
 
         entity.insertBus(bus);
+        session.commit();
         return "OK";
     }
 
@@ -55,6 +56,7 @@ public class MysqlController {
         suv.setCha_height("");
 
         entity.insertSuv(suv);
+        session.commit();
         return "OK";
     }
 
@@ -67,7 +69,7 @@ public class MysqlController {
         attr.setWindows(20);
 
         entity.insertAttr(attr);
-
+        session.commit();
         return "OK";
     }
 
@@ -78,16 +80,20 @@ public class MysqlController {
         vehicle.setSub_id(3);
 
         entity.insertVehicle(vehicle);
+        session.commit();
         return "OK";
     }
 
     public String delete(){
         entity.deleteBus(2);
+        session.commit();
         return "OK";
     }
 
     public String update(){
         entity.updateBus();
+        session.commit();
         return "OK";
     }
+
 }
